@@ -1,28 +1,28 @@
 package socket;
 
 import java.io.BufferedReader;
-import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.MalformedURLException;
-import java.net.Socket;
 import java.rmi.Naming;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 
 public class ClientRMI {
 	
+		
 	static String SYMB;
 	static StockServerInt myServer = null;
 	static String quote;
 
-	static OutputStream outbound;
-	static BufferedReader inbound;
+	static OutputStream outbound=null;
+	static BufferedReader inbound=null;
 
 	private static void connectServer() {
 		try {
 			myServer = (StockServerInt)Naming.lookup("rmi://localhost:1099/QService");
 			System.out.println("I have connected to the server");
+			
 
 		}
 		catch(Exception e) {
@@ -43,7 +43,7 @@ public class ClientRMI {
 					receivePrice("exit");
 					System.out.println("Exit the programm");
 					reader.close();
-					System.exit(-1);
+					System.exit(0);
 				}
 
 
@@ -67,20 +67,22 @@ public class ClientRMI {
 
 		try {
 
-			String price = myServer.getQoute(sym);
-			
-			if (price.equals("exit")) {
-				System.out.println("Server was Shat down");
+			if (sym.equals("exit")) {
+				 myServer.getQoute(sym);
+				System.out.println("Server was Shat down");;
 				
 			}
-
-			if(price!=null) {
+			else {
+			String price = myServer.getQoute(sym);
+			
+			if(price!=null ) {
+				
 				System.out.println("The price of "+ sym+" - $"+price);
 			}
-			else {
+			else if (!sym.equals("exit")){
 				System.out.println("Invalid symbolsList. Please, use one of these: "+ myServer.getListSymbols().toString());
 			}
-
+			}
 
 		} catch (RemoteException e) {
 			
