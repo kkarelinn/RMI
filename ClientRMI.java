@@ -3,9 +3,7 @@ package socket;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
-import java.net.MalformedURLException;
 import java.rmi.Naming;
-import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 
 public class ClientRMI {
@@ -69,7 +67,7 @@ public class ClientRMI {
 
 			if (sym.equals("exit")) {
 				 myServer.getQoute(sym);
-				System.out.println("Server was Shat down");;
+				System.out.println("Server was Shut down");;
 				
 			}
 			else {
