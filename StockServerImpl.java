@@ -21,7 +21,7 @@ public class StockServerImpl extends UnicastRemoteObject implements StockServerI
 	
 	protected StockServerImpl() throws RemoteException {
 		super();
-		registry = LocateRegistry.createRegistry(1200);
+		registry = LocateRegistry.createRegistry(1099);
 		//define some stock Symbols code
 		listSymbols.add("AMZN");
 		listSymbols.add("MSFT");
@@ -37,13 +37,15 @@ public class StockServerImpl extends UnicastRemoteObject implements StockServerI
 	public String getQoute(String symbol) throws RemoteException {
 		 if(symbol.equals("exit")) {
 			try {
-				UnicastRemoteObject.unexportObject(this, true);
-				registry.unbind("rmi://localhost:1200/QService");
 				
-				System.exit(-1);
+				UnicastRemoteObject.unexportObject(this, true);
+				 System.out.println("Server was shut down");
+				
+				
 							
 		   } catch (Exception e) {
-			 e.printStackTrace();
+			  
+			e.printStackTrace();
 			}	 
 		 }
 		
